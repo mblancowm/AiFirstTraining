@@ -1,0 +1,23 @@
+{
+  "name": "@wm-ai-first/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch src/index.ts",
+    "start": "bun src/index.ts",
+    "db:init": "bun src/db/migrate.ts"
+  },
+  "dependencies": {
+    "@hono/zod-validator": "^0.7.2",
+    "@wm-ai-first/contracts": "workspace:*",
+    "drizzle-orm": "^0.44.5",
+    "hono": "^4.9.7",
+    "pg": "^8.16.3",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.15.5",
+    "bun-types": "^1.2.21"
+  }
+}

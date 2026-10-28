@@ -1,0 +1,27 @@
+{
+  "name": "@wm-ai-first/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vike dev --host 0.0.0.0",
+    "build": "vike build"
+  },
+  "dependencies": {
+    "@wm-ai-first/contracts": "workspace:*",
+    "@tanstack/react-query": "^5.87.1",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "vike": "^0.4.242",
+    "vike-react": "^0.6.10"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.9.2",
+    "vite": "^6.3.6"
+  }
+}
