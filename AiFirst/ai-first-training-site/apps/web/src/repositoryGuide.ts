@@ -6,6 +6,14 @@ export const repoTree = `
 ├── README.md
 ├── package.json
 ├── bun.lock
+├── prompts/                         # Plantillas Markdown P0–P6
+│   ├── P0-clarify-scope.md
+│   ├── P1-inspect-and-plan.md
+│   ├── P2-implement-plan.md
+│   ├── P3-debug-and-fix.md
+│   ├── P4-review-diff.md
+│   ├── P5-verify-and-deliver.md
+│   └── P6-teach-back-check.md
 ├── apps/
 │   ├── api/                         # Bun + Hono
 │   │   ├── src/
@@ -23,6 +31,8 @@ export const repoTree = `
 ├── packages/
 │   └── contracts/src/index.ts        # Backend + Frontend acuerdan; QA revisa ejemplos
 ├── docs/
+│   ├── planning/                    # Planes de solo lectura aprobados antes de editar
+│   │   └── ticket-triage.md
 │   ├── product/                      # Todo el equipo; Frontend coordina screen-flow
 │   │   ├── brief.md
 │   │   └── screen-flow.md
@@ -43,35 +53,35 @@ export const repoTree = `
 
 export const documentationSchedule = [
   {
-    week: "SEMANA 1",
-    title: "Crear el mapa mínimo",
-    files: "README.md, AGENTS.md, brief.md, screen-flow.md, overview.md, contract.md, model.md y acceptance.md.",
-    note: "Deben ser breves y concordar entre sí. El equipo revisa contrato, flujo y criterios antes de repartir tareas dependientes.",
+    stage: "TRACK 1 · FUNDAMENTOS Y ALCANCE",
+    title: "Aclarar el problema",
+    files: "README.md, docs/product/brief.md y docs/qa/acceptance.md.",
+    note: "El usuario, el alcance y los criterios deben describir el mismo resultado. Usa ejemplos sintéticos y registra los supuestos.",
   },
   {
-    week: "SEMANA 2",
-    title: "Documentar cada cambio pequeño",
-    files: "Un docs/backlog/T-###-tema.md por tarea; actualizar README y contratos si cambia cómo se ejecuta o se integra.",
-    note: "El ticket conecta problema, alcance, criterios, rutas que probablemente cambiarán y verificación. No documenta una solución supuesta como requisito.",
+    stage: "TRACK 2 · CONTEXTO Y PLAN SEGURO",
+    title: "Inspeccionar y planear en solo lectura",
+    files: "AGENTS.md, docs/planning/ticket-triage.md, docs/architecture/overview.md y contratos relacionados.",
+    note: "Lee AGENTS.md y README.md antes de editar. El plan documenta archivos, pasos, pruebas, riesgos y dependencias y recibe aprobación del equipo.",
   },
   {
-    week: "SEMANA 3",
-    title: "Registrar lo que se comprobó y decidió",
-    files: "test-plan.md con resultados observados; ADR solo para una decisión con impacto; handoff por cada PR.",
-    note: "Actualicen modelo, API o arquitectura cuando la implementación revele un cambio real. Separen evidencia, pendientes y suposiciones.",
+    stage: "TRACK 3 · IMPLEMENTACIÓN POR FOCO",
+    title: "Construir en cambios pequeños",
+    files: "Prompts P0–P6, docs/backlog/T-###-tema.md, pruebas pertinentes y PRs.",
+    note: "Ajusta las guías a Backend/API, Datos, Frontend, Integración de IA, QA o Producto/UX. Registra pruebas ejecutadas y sugerencias aceptadas o rechazadas.",
   },
   {
-    week: "SEMANA 4",
-    title: "Dejar a otra persona lista para continuar",
-    files: "demo.md, handoff.md, retro.md y README actualizado; repetir los pasos desde un clon limpio.",
-    note: "El material debe permitir ejecutar el flujo, explicar sus límites y encontrar el próximo ticket sin explicación oral.",
+    stage: "TRACK 4 · INTEGRACIÓN Y HANDOFF",
+    title: "Conectar, revisar y transferir",
+    files: "docs/qa/test-plan.md, docs/delivery/demo.md, docs/delivery/handoff.md y README actualizado.",
+    note: "Conecta los focos, depura con registros, revisa diffs entre pares y demuestra cómo otra persona puede ejecutar y continuar el flujo.",
   },
 ];
 
 export const markdownFileGuide = [
   {
     path: "README.md",
-    week: "Semana 1; actualizar si cambian los comandos",
+    stage: "Track 1; actualizar si cambian los comandos",
     coordinator: "Todo el equipo; una persona integra las instrucciones",
     purpose: "Es la primera puerta de entrada: explica para qué sirve el repo y permite instalar, iniciar y comprobar el proyecto.",
     template: `# Nombre del proyecto
@@ -105,14 +115,60 @@ Explicar qué datos son sintéticos y qué no cubre esta versión.`,
   },
   {
     path: "AGENTS.md",
-    week: "Semana 1; mantener como reglas canónicas",
+    stage: "Track 2; mantener como reglas canónicas",
     coordinator: "Todo el equipo; revisar con el responsable de repositorio",
     purpose: "Da las mismas reglas permanentes a developers y asistentes de IA. No dupliquen instrucciones contradictorias en otros archivos.",
     template: starterAgents,
   },
   {
+    path: "docs/planning/ticket-triage.md",
+    stage: "Track 2; revisar y aprobar antes de editar código",
+    coordinator: "Developer que prepara el plan; el equipo lo aprueba",
+    purpose: "Registra el comportamiento actual, el alcance y un plan de implementación de solo lectura, con pruebas y riesgos visibles.",
+    template: `# Feature Implementation Plan: Ticket Priority Triage
+
+## Goal and Acceptance Criteria
+- Goal: classify a support ticket as LOW, MEDIUM, HIGH, or URGENT.
+- Acceptance criteria:
+  1. POST /api/tickets/triage accepts a title and body.
+  2. Empty bodies and bodies over the agreed limit are rejected with a clear error.
+  3. The response follows the documented contract.
+  4. Provider failure follows a documented fallback without a live network call in tests.
+
+## Current Behavior and Context
+- Relevant routes, services, schemas, and tests:
+- Existing conventions and instructions from AGENTS.md:
+- Related contracts or decisions:
+
+## Scope and Boundaries
+- Included:
+- Excluded:
+- Assumptions and questions that block the plan:
+
+## Affected Files
+- [path] — [reason]
+
+## Proposed Steps
+1. [small implementation step]
+2. [test or documentation step]
+
+## Verification Plan
+- Unit/integration tests:
+- Manual checks:
+- Commands to run after approval:
+
+## Risks and Dependencies
+- [risk, dependency, or mitigation]
+
+## Team Approval
+- Reviewers:
+- Decision and date:
+
+This plan is read-only until the team approves it.`,
+  },
+  {
     path: "docs/product/brief.md",
-    week: "Semana 1",
+    stage: "Track 1",
     coordinator: "Todo el equipo; QA facilita criterios verificables",
     purpose: "Fija el usuario, el problema, el objetivo y los límites que guían las decisiones de producto.",
     template: `# Brief del proyecto
@@ -137,11 +193,11 @@ Enlazar docs/qa/acceptance.md.
 Stack, tiempo, datos sintéticos, privacidad y dependencias.
 
 ## Señal de éxito
-Qué observará el equipo durante la demo de 10 minutos.`,
+Qué observará el equipo durante una demo breve.`,
   },
   {
     path: "docs/product/screen-flow.md",
-    week: "Semana 1",
+    stage: "Track 1; actualizar cuando cambien criterios",
     coordinator: "Frontend; validar el recorrido con todo el equipo",
     purpose: "Muestra pantallas, acciones y estados antes de implementar. Evita que la interfaz prometa un comportamiento distinto al contrato.",
     template: `# Recorrido de pantalla
@@ -166,7 +222,7 @@ Enlazar IDs de docs/qa/acceptance.md.`,
   },
   {
     path: "docs/architecture/overview.md",
-    week: "Semana 1; revisar cuando cambie el flujo entre capas",
+    stage: "Track 2; actualizar si el plan cambia el flujo entre capas",
     coordinator: "Backend/API con revisión de Frontend y Base de datos",
     purpose: "Explica las piezas, sus límites y cómo viaja una solicitud. Debe corresponder con el contrato y el código.",
     template: `# Arquitectura del MVP
@@ -194,7 +250,7 @@ Enlazar ADRs si la decisión tiene impacto.`,
   },
   {
     path: "docs/api/contract.md",
-    week: "Semana 1 antes de separar trabajo dependiente",
+    stage: "Track 2 antes de separar trabajo dependiente",
     coordinator: "Backend/API; Frontend implementa como consumidor y QA revisa casos",
     purpose: "Es el acuerdo que permite construir Web y API en paralelo sin inventar formatos diferentes.",
     template: `# Contrato de API
@@ -228,7 +284,7 @@ Consumidores afectados y cómo coordinar cambios.`,
   },
   {
     path: "docs/data/model.md",
-    week: "Semana 1; migraciones y seed durante semana 2",
+    stage: "Track 2 para acordar; Track 3 para implementar",
     coordinator: "Base de datos con revisión de Backend/API y QA",
     purpose: "Registra entidades, relaciones, restricciones, migraciones y cómo reconstruir datos sintéticos desde cero.",
     template: `# Modelo de datos
@@ -252,7 +308,7 @@ Qué rutas, contratos y pruebas deben revisarse al cambiar el modelo.`,
   },
   {
     path: "docs/backlog/T-001-short-title.md",
-    week: "Semana 2; crear un archivo por tarea",
+    stage: "Track 3; crear un archivo por tarea",
     coordinator: "La persona que toma la tarea; QA revisa los criterios",
     purpose: "Divide el trabajo en un cambio pequeño que alguien pueda implementar, revisar y verificar sin contexto oral.",
     template: `# T-001: Verbo + resultado esperado
@@ -280,7 +336,7 @@ Estado, limitaciones y siguiente paso después del PR.`,
   },
   {
     path: "docs/qa/acceptance.md",
-    week: "Semana 1; actualizar con cambios de alcance acordados",
+    stage: "Track 1; actualizar solo con cambios de alcance acordados",
     coordinator: "QA / pruebas con todo el equipo",
     purpose: "Convierte la necesidad en resultados observables que Frontend, Backend y datos puedan comprobar.",
     template: `# Criterios de aceptación
@@ -301,8 +357,8 @@ Estado, limitaciones y siguiente paso después del PR.`,
   },
   {
     path: "docs/qa/test-plan.md",
-    week: "Semana 2; resultados de integración en semana 3",
-    coordinator: "QA / pruebas con evidencia de las cuatro áreas",
+    stage: "Track 3 para pruebas; Track 4 para resultados integrados",
+    coordinator: "QA / pruebas con evidencia de los seis focos",
     purpose: "Relaciona criterios con pruebas, comandos y resultados reales; hace visible lo que no se probó.",
     template: `# Plan y resultados de verificación
 
@@ -325,7 +381,7 @@ Pasos exactos o enlaces a CI/PR; no anotar solo “pasa”.`,
   },
   {
     path: "docs/decisions/ADR-001-short-title.md",
-    week: "Cuando haya una decisión con impacto o alternativas reales",
+    stage: "Cuando haya una decisión con impacto o alternativas reales",
     coordinator: "Quien propone la decisión; revisan las áreas afectadas",
     purpose: "Conserva por qué se eligió una opción y qué consecuencias tiene. No hace falta un ADR para decisiones fáciles de revertir.",
     template: `# ADR-001: Título de la decisión
@@ -351,10 +407,10 @@ Qué señal justificaría revisar la decisión.`,
   },
   {
     path: "docs/delivery/demo.md",
-    week: "Semana 4",
+    stage: "Track 4 y demos del equipo",
     coordinator: "Todo el equipo; QA reúne criterios y evidencia",
-    purpose: "Permite repetir la demo final de 10 minutos con datos sintéticos y sin preparación oral del autor.",
-    template: `# Demo final · 10 minutos
+    purpose: "Permite hacer una demo breve y repetible con datos sintéticos, sin preparación oral del autor.",
+    template: `# Demo de equipo · 15 minutos
 
 ## Preparación
 Clon limpio, comandos, URL, cuenta de prueba si aplica y datos sintéticos.
@@ -362,11 +418,10 @@ Clon limpio, comandos, URL, cuenta de prueba si aplica y datos sintéticos.
 ## Guion
 | Tiempo | Qué mostrar | Criterio/evidencia |
 | --- | --- | --- |
-| 1 min | Usuario, problema y límite | Brief |
-| 4 min | Flujo principal | AC-01 y fixture |
-| 2 min | Caso límite y recuperación | AC-02 y resultado QA |
-| 2 min | Reglas, decisiones y verificaciones | AGENTS.md, ADR y CI |
-| 1 min | Siguiente paso | Handoff y backlog |
+| 2 min | Usuario, problema y alcance | Brief y criterios |
+| 7 min | Flujo principal con datos sintéticos | Criterios de aceptación |
+| 3 min | Caso límite, registros y pruebas | Evidencia de QA |
+| 3 min | Decisiones, límites y siguiente paso | Plan y handoff |
 
 ## Plan alterno
 Qué mostrar si un servicio o entorno falla.
@@ -376,7 +431,7 @@ Qué no debe interpretarse como terminado.`,
   },
   {
     path: "docs/delivery/handoff.md",
-    week: "Por PR y cierre final; cada PR también incluye su propio handoff",
+    stage: "Por cada PR y en Track 4",
     coordinator: "Autor del cambio; QA confirma evidencia",
     purpose: "Da a la siguiente persona el estado, decisiones y verificaciones suficientes para continuar desde el repo.",
     template: `# Handoff
@@ -398,7 +453,7 @@ Rama/PR relacionado y siguiente tarea concreta con su archivo de backlog.`,
   },
   {
     path: "docs/retro.md",
-    week: "Semana 4",
+    stage: "Track 4; después de una demo o integración significativa",
     coordinator: "Todo el equipo; cada mejora tiene responsable",
     purpose: "Convierte la experiencia del programa en una mejora concreta para las reglas y la plantilla reutilizable.",
     template: `# Retrospectiva
@@ -423,21 +478,21 @@ export const markdownFileGroups = [
   {
     title: "1. Preparar el repositorio",
     intro: "Empiecen aquí: orienta a la persona nueva, fija reglas compartidas y define el problema y el recorrido.",
-    files: markdownFileGuide.slice(0, 4),
+    files: markdownFileGuide.slice(0, 5),
   },
   {
     title: "2. Definir cómo se conecta la solución",
     intro: "Acordar estas piezas permite que Web, API y datos construyan contra el mismo flujo.",
-    files: markdownFileGuide.slice(4, 7),
+    files: markdownFileGuide.slice(5, 8),
   },
   {
     title: "3. Construir y comprobar cambios",
     intro: "Cada tarea pequeña enlaza criterios, rutas afectadas y evidencia; registren decisiones cuando tengan impacto.",
-    files: markdownFileGuide.slice(7, 11),
+    files: markdownFileGuide.slice(8, 12),
   },
   {
     title: "4. Entregar y mejorar la plantilla",
     intro: "Preparen una demo repetible, dejen un punto claro para continuar y conviertan lo aprendido en una mejora concreta.",
-    files: markdownFileGuide.slice(11),
+    files: markdownFileGuide.slice(12),
   },
 ];

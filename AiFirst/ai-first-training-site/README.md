@@ -1,14 +1,17 @@
 # Programa de equipos AI-first
 
-Sitio de aprendizaje para llevar a un equipo desde la definición de un flujo pequeño hasta una demo transferible en cuatro semanas. El contenido está en español y sigue la propuesta de management. La demo final es de **10 minutos**.
+Sitio estático de aprendizaje autodirigido en español para practicar desarrollo AI-first mediante cuatro learning tracks flexibles. Los equipos pueden avanzar en orden o elegir módulos según su capacidad y el trabajo del sprint; aprenden con un proyecto real o sintético y verifican cada cambio.
 
 ## Qué contiene
 
-- Ruta guiada de cuatro semanas con acciones, entregables, ejemplos por foco y puertas de salida.
+- Cuatro tracks independientes y conectados: fundamentos y alcance, contexto y planificación segura, implementación por foco, e integración y handoff.
+- Ciclo AI-first de seis pasos y reglas no negociables de seguridad y privacidad.
+- Biblioteca de prompts Markdown P0–P6 y guías por foco; las prácticas de integración de IA usan mocks y datos sintéticos.
+- Aprendizaje autogobernado mediante pull requests, revisiones entre pares y demos breves de funciones en vivo; no hay backend, tracking automatizado ni tutor de IA integrado.
 - Página de arquitectura de referencia para los tres proyectos de estudiantes: stack, flujo entre capas, carpetas por foco y guía de integración.
 - Tres proyectos de práctica, cada uno con alcance, exclusiones, trabajo por foco, criterios QA y fixtures sintéticos.
-- Guía del árbol de carpetas y archivos, calendario de documentación por semana y plantillas copiables para README, AGENTS.md, brief, flujo de pantallas, arquitectura, contrato, modelo, tickets, QA, ADR, demo, handoff y retro.
-- Descarga de un kit Markdown por proyecto con brief, arquitectura, flujo de integración, guía semana a semana por foco, árbol del repo y todas las plantillas documentales.
+- Guía del árbol de carpetas y archivos, mapa de documentación por track y plantillas copiables para README, AGENTS.md, brief, plan de función, arquitectura, contrato, modelo, tickets, QA, ADR, demo, handoff y retro.
+- Descarga de un kit Markdown por proyecto con brief, arquitectura, flujo de integración, guía por track y foco, prompts P0–P6, árbol del repo y plantillas documentales.
 - Ruta personal para elegir uno de los tres proyectos y un foco de aprendizaje.
 - Plantillas y ejemplos de AGENTS.md, ticket, estructura de repo y handoff de PR.
 - Proyecto y foco guardados en el navegador actual para personalizar las guías; no requiere cuenta ni correo.

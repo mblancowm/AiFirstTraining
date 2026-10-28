@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const projectKeySchema = z.enum(["appointments", "knowledge", "support"]);
-export const roleSchema = z.enum(["backend", "data", "frontend", "qa"]);
+export const roleSchema = z.enum(["backend", "data", "frontend", "aiIntegration", "qa", "productUx"]);
 
 export const createGroupSchema = z.object({
   name: z.string().trim().min(2, "Usa al menos 2 caracteres.").max(60, "Máximo 60 caracteres."),

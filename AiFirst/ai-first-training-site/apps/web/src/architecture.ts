@@ -27,8 +27,20 @@ export const architectureByRole: Record<TeamRole, {
   qa: {
     technology: "Build, lint y pruebas pertinentes automatizadas en CI por PR; revisión humana y evidencia registrada en el repositorio.",
     responsibility: "Facilitar que el equipo acuerde criterios, diseñar casos normales y límite, comprobar el flujo entre capas y documentar resultados observados.",
-    connectsWith: "Trabaja con los cuatro focos: criterios con el grupo, errores con Backend, estados con Frontend, integridad con Base de datos.",
+    connectsWith: "Trabaja con todos los focos: criterios con Producto, errores con Backend, estados con Frontend e integridad con Datos.",
     integrationArtifact: "Casos vinculados a criterios, evidencia de CI y reporte reproducible de los defectos encontrados.",
+  },
+  aiIntegration: {
+    technology: "Wrapper de proveedor con validación de esquema, proveedor simulado para pruebas y mediciones sintéticas de calidad, latencia y costo.",
+    responsibility: "Definir la frontera del proveedor, validar entradas y salidas, manejar timeout, errores y límites, y cuidar privacidad.",
+    connectsWith: "Acuerda con Producto si una función de IA pertenece al alcance. Usa contratos aprobados y mocks deterministas; no envía datos reales.",
+    integrationArtifact: "Wrapper reproducible con validación, fallbacks y evidencia de pruebas locales; proveedor real solo con autorización explícita.",
+  },
+  productUx: {
+    technology: "Brief, historias, mapas de flujo, criterios de aceptación y decisiones de alcance.",
+    responsibility: "Definir el problema, establecer límites, hacer verificables los criterios y señalar supuestos que requieren acuerdo.",
+    connectsWith: "Alinea criterios con QA, contratos con Backend y estados con Frontend; detiene cambios de alcance sin acuerdo del equipo.",
+    integrationArtifact: "Brief y criterios vinculados a tickets, demo y handoff; preguntas pendientes claramente identificadas.",
   },
 };
 
@@ -47,32 +59,34 @@ export const studentProjectComponents = [
   { path: "apps/api/src/db/ · apps/api/drizzle/", role: "Base de datos", responsibility: "Esquema Drizzle, migraciones, restricciones y seed sintético." },
   { path: "packages/contracts/", role: "Frontend + Backend; QA revisa", responsibility: "Tipos y esquemas Zod de request, response y errores acordados." },
   { path: "docs/qa/ · .github/workflows/", role: "QA / pruebas coordina", responsibility: "Criterios, casos, evidencia y controles de CI; todo el equipo aporta." },
+  { path: "apps/api/src/ai/ · docs/ai/", role: "Integración de IA (si se aprueba)", responsibility: "Frontera del proveedor, validación, mocks locales, fallbacks y evaluación con datos sintéticos." },
+  { path: "docs/product/", role: "Producto / UX coordina", responsibility: "Problema, alcance, criterios verificables, flujos y decisiones de experiencia." },
 ];
 
-export const integrationWeeks = [
+export const integrationTracks = [
   {
-    week: "01",
-    title: "Acordar la frontera entre capas",
-    together: "El equipo define el flujo; QA vuelve los criterios comprobables; Frontend y Backend acuerdan el contrato; Base de datos valida que el modelo lo soporte.",
-    checkpoint: "Un ejemplo de request, respuesta, error y fixture existe antes de dividir tickets dependientes.",
+    track: "01",
+    title: "Acordar el problema y el alcance",
+    together: "Producto define el resultado y sus límites; QA vuelve los criterios comprobables; los demás focos identifican qué partes del sistema podrían participar.",
+    checkpoint: "El brief y los criterios describen el mismo resultado y excluyen cambios que el equipo no acordó.",
   },
   {
-    week: "02",
-    title: "Construir en paralelo contra el mismo ejemplo",
-    together: "Frontend puede usar el fixture; Backend implementa la ruta con Zod; Base de datos prepara migración y seed; QA automatiza los criterios prioritarios.",
-    checkpoint: "Los PRs pequeños pasan CI y no redefinen el contrato por separado.",
+    track: "02",
+    title: "Planear antes de implementar",
+    together: "El equipo inspecciona arquitectura, contratos y reglas del repositorio en solo lectura; asigna límites y dependencias antes de aprobar el plan.",
+    checkpoint: "AGENTS.md y el plan aprobado señalan archivos afectados, riesgos, dependencias y verificaciones.",
   },
   {
-    week: "03",
-    title: "Conectar un recorrido vertical completo",
-    together: "La persona inicia una acción en Web; la llamada llega a Hono; Drizzle lee o guarda en la base; la respuesta vuelve por el mismo contrato y QA recorre el resultado.",
-    checkpoint: "El equipo demuestra un caso normal y un caso límite con la aplicación conectada, datos persistidos y evidencia.",
+    track: "03",
+    title: "Implementar por foco contra el mismo contrato",
+    together: "Frontend puede usar el fixture; Backend implementa la ruta; Datos prepara migración y seed; QA automatiza criterios; AI Integration usa un mock si aplica y Producto revisa que se respete el alcance.",
+    checkpoint: "Los PRs pequeños incluyen pruebas pertinentes y no redefinen el contrato por separado.",
   },
   {
-    week: "04",
-    title: "Transferir la solución integrada",
-    together: "Otra persona parte de un clon limpio, sigue README y AGENTS.md, levanta servicios, completa una tarea y explica cómo se verifica.",
-    checkpoint: "La demo de 10 minutos muestra el flujo, un límite, las verificaciones y el siguiente paso sin depender de explicación oral.",
+    track: "04",
+    title: "Integrar y preparar el handoff",
+    together: "El equipo conecta el flujo completo, usa registros para depurar, revisa los cambios entre pares y presenta una demo breve con evidencia y límites.",
+    checkpoint: "Otra persona puede ejecutar el flujo, revisar resultados y continuar desde el README y el handoff.",
   },
 ];
 

@@ -8,13 +8,13 @@ export type WeeklyRoleGuide = {
 };
 
 export const weeklyTeamPractices: Record<string, string> = {
-  "01": "Todo el equipo acuerda usuario, problema y alcance. QA convierte los criterios en comprobaciones; API, datos y frontend confirman que el mismo ejemplo de request, respuesta y fixture permite construir el flujo.",
-  "02": "En cada PR, una persona de otra área explica qué entendió del cambio y qué comprobó. El foco del rol coordina; la responsabilidad sigue siendo del equipo.",
-  "03": "Hagan un intercambio: otra persona retoma un ticket o reproduce el defecto leyendo solo el repo, el ticket y el handoff.",
-  "04": "Una persona que no implementó el flujo clona el repo, lo ejecuta, completa una tarea pequeña y da la demo usando la documentación.",
+  "01": "Apliquen P0 a una solicitud amplia. Acuerden la necesidad, los límites y criterios observables; actualicen README y brief del proyecto.",
+  "02": "Lean AGENTS.md y README.md, inspeccionen el repositorio en solo lectura, preparen el plan con P1 y obtengan aprobación antes de editar.",
+  "03": "Implementen tareas pequeñas por foco con P2, pruebas y diffs revisables. Registren sugerencias aceptadas o rechazadas y resultados reales en los PRs.",
+  "04": "Conecten los componentes, reproduzcan un defecto sintético con registros y usen P3, P4 y P5 para corregir, revisar y preparar el handoff y la demo.",
 };
 
-export const weeklyRoleGuides: Record<string, Record<TeamRole, WeeklyRoleGuide>> = {
+export const weeklyRoleGuides: Record<string, Partial<Record<TeamRole, WeeklyRoleGuide>>> = {
   "01": {
     backend: {
       goal: "Hacer explícita la conversación entre la interfaz y la API antes de implementarla.",
@@ -85,7 +85,7 @@ export const weeklyRoleGuides: Record<string, Record<TeamRole, WeeklyRoleGuide>>
     qa: {
       goal: "Ayudar al equipo a dividir el alcance y detectar regresiones antes de integrar.",
       actions: [
-        "Trabajen con las otras tres áreas para dividir el flujo en tickets pequeños vinculados a criterios.",
+        "Trabajen con los otros focos para dividir el flujo en tickets pequeños vinculados a criterios.",
         "En cada ticket, comprueben que el problema, alcance, exclusiones, dependencias y verificación están claros.",
         "Automaticen primero los criterios de mayor valor y las reglas que no deben romperse.",
         "Prueben entradas normales, inválidas y límites en la capa adecuada; eviten duplicar pruebas sin propósito.",
@@ -180,7 +180,7 @@ export type WeeklyRolePlan = {
   verify: string;
 };
 
-export const weeklyRolePlans: Record<string, Record<TeamRole, WeeklyRolePlan>> = {
+export const weeklyRolePlans: Record<string, Partial<Record<TeamRole, WeeklyRolePlan>>> = {
   "01": {
     backend: {
       files: ["docs/api/contract.md", "packages/contracts/src/index.ts"],
@@ -199,7 +199,7 @@ export const weeklyRolePlans: Record<string, Record<TeamRole, WeeklyRolePlan>> =
     },
     qa: {
       files: ["docs/product/brief.md", "docs/qa/acceptance.md"],
-      why: "El brief pone límites al trabajo; los criterios observables permiten que las cuatro áreas construyan y revisen el mismo resultado.",
+      why: "El brief pone límites al trabajo; los criterios observables permiten que todos los focos construyan y revisen el mismo resultado.",
       verify: "Cada criterio indica contexto inicial, acción y resultado observable. Incluyan el flujo normal, un límite, una entrada inválida y un caso vacío o de error; confirmen que todo cabe en el alcance del brief.",
     },
   },
@@ -266,7 +266,7 @@ export const weeklyRolePlans: Record<string, Record<TeamRole, WeeklyRolePlan>> =
     qa: {
       files: ["docs/delivery/demo.md", "docs/qa/test-plan.md", "docs/delivery/handoff.md"],
       why: "Una transferencia independiente comprueba si el repositorio enseña lo suficiente para ejecutar, verificar y continuar el proyecto, más allá de una demo preparada por sus autores.",
-      verify: "Pida a alguien que no implementó el flujo clonarlo y seguir README sin ayuda oral. Registre si lo ejecutó, completó una tarea, explicó la verificación y terminó la demo en 10 minutos.",
+      verify: "Pida a alguien que no implementó el flujo clonarlo y seguir README sin ayuda oral. Registre si lo ejecutó, completó una tarea y explicó la verificación durante una demo breve de equipo.",
     },
   },
 };
